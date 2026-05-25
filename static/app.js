@@ -105,7 +105,7 @@ function switchAuthTab(tab) {
         tabRegisterBtn.classList.add('active');
         tabLoginBtn.classList.remove('active');
         registerForm.classList.add('active');
-        loginForm.classList.add('active');
+        loginForm.classList.remove('active');
     }
 }
 
