@@ -1,0 +1,28 @@
+# Git
+.git/
+.gitignore
+
+# Virtual environment
+venv/
+.venv/
+env/
+ENV/
+
+# Databases
+tasks.db
+*.db
+*.sqlite
+
+# Caching & python compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Local configuration files
+.env
+.env.*
+Dockerfile
+.dockerignore
+README.md
