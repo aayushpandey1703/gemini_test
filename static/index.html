@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlowTask // Premium Task & Note Manager</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <!-- Background Animated Glows -->
+    <div class="glow-bg">
+        <div class="glow-sphere glow-1"></div>
+        <div class="glow-sphere glow-2"></div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- MAIN APP WRAPPER -->
+    <div class="app-container">
+
+        <!-- 1. AUTHENTICATION SECTION (Login & Registration) -->
+        <section id="auth-section" class="auth-section">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <div class="logo-area">
+                        <span class="logo-icon">✦</span>
+                        <h1>GlowTask</h1>
+                    </div>
+                    <p class="subtitle">Securely organize your notes and tasks</p>
+                </div>
+
+                <!-- Tab Headers -->
+                <div class="auth-tabs">
+                    <button class="tab-btn active" id="tab-login-btn" onclick="switchAuthTab('login')">Sign In</button>
+                    <button class="tab-btn" id="tab-register-btn" onclick="switchAuthTab('register')">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form active" onsubmit="handleLogin(event)">
+                    <div class="input-group">
+                        <label for="login-username">Username</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="login-username" required placeholder="Enter username...">
+                            <span class="field-icon">👤</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="login-password">Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="login-password" required placeholder="Enter password...">
+                            <span class="field-icon">🔒</span>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn" id="login-submit">
+                        <span>Sign In</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="register-form" class="auth-form" onsubmit="handleRegister(event)">
+                    <div class="input-group">
+                        <label for="reg-username">Username</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="reg-username" required placeholder="Choose a username...">
+                            <span class="field-icon">👤</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-email">Email Address</label>
+                        <div class="input-wrapper">
+                            <input type="email" id="reg-email" required placeholder="your.email@example.com">
+                            <span class="field-icon">✉️</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-password">Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="reg-password" required placeholder="Create strong password...">
+                            <span class="field-icon">🔒</span>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn" id="register-submit">
+                        <span>Create Account</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+
+        <!-- 2. DASHBOARD SECTION (Tasks View) -->
+        <section id="dashboard-section" class="dashboard-section hidden">
+            <!-- Navigation / Top Header -->
+            <header class="app-header">
+                <div class="logo-area">
+                    <span class="logo-icon">✦</span>
+                    <h2>GlowTask</h2>
+                </div>
+                <div class="user-profile">
+                    <div class="user-info">
+                        <span class="user-welcome">Welcome,</span>
+                        <span id="user-display-name" class="user-name">User</span>
+                    </div>
+                    <button class="logout-btn" onclick="handleLogout()" title="Sign Out">
+                        <span>Sign Out</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Creation Bar & Statistics Grid -->
+            <div class="dashboard-grid">
+                
+                <!-- Task Creator -->
+                <div class="creator-card">
+                    <h3>Create New Note / Task</h3>
+                    <form id="task-create-form" onsubmit="handleCreateTask(event)">
+                        <div class="input-group">
+                            <input type="text" id="task-title" required placeholder="Task title...">
+                        </div>
+                        <div class="input-group">
+                            <textarea id="task-desc" rows="3" placeholder="Add details or description (optional)..."></textarea>
+                        </div>
+                        <button type="submit" class="create-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>Add Task</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Statistics and Filters Panel -->
+                <div class="control-panel">
+                    <div class="stats-container">
+                        <div class="stat-box">
+                            <span class="stat-val" id="stat-total">0</span>
+                            <span class="stat-lbl">Total</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-val text-pending" id="stat-pending">0</span>
+                            <span class="stat-lbl">Active</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-val text-complete" id="stat-completed">0</span>
+                            <span class="stat-lbl">Completed</span>
+                        </div>
+                    </div>
+
+                    <!-- Filter Control -->
+                    <div class="filter-controls">
+                        <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">All</button>
+                        <button class="filter-btn" data-filter="pending" onclick="setFilter('pending')">Active</button>
+                        <button class="filter-btn" data-filter="completed" onclick="setFilter('completed')">Completed</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Notes List / Tasks Listing -->
+            <div class="tasks-container">
+                <div class="section-title-bar">
+                    <h3>Your Notes & Tasks</h3>
+                    <span id="tasks-count-badge" class="count-badge">0 items</span>
+                </div>
+
+                <!-- Loading State -->
+                <div id="tasks-loader" class="tasks-loader hidden">
+                    <div class="spinner"></div>
+                    <p>Fetching tasks...</p>
+                </div>
+
+                <!-- Empty State -->
+                <div id="tasks-empty" class="tasks-empty">
+                    <div class="empty-icon">📁</div>
+                    <h4>No Tasks Found</h4>
+                    <p>Start by creating a new task or check your filters.</p>
+                </div>
+
+                <!-- Task Cards Grid -->
+                <div id="tasks-grid" class="tasks-grid">
+                    <!-- Javascript generates task-cards here -->
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- 3. EDIT TASK MODAL -->
+    <div id="edit-modal" class="modal-overlay hidden" onclick="closeEditModal(event)">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3>Edit Note / Task</h3>
+                <button class="close-modal-btn" onclick="closeEditModal()">×</button>
+            </div>
+            <form id="task-edit-form" onsubmit="handleSaveTaskEdit(event)">
+                <input type="hidden" id="edit-task-id">
+                <div class="input-group">
+                    <label for="edit-task-title">Title</label>
+                    <input type="text" id="edit-task-title" required>
+                </div>
+                <div class="input-group">
+                    <label for="edit-task-desc">Description</label>
+                    <textarea id="edit-task-desc" rows="4"></textarea>
+                </div>
+                <div class="input-group-row">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="edit-task-completed">
+                        <span class="slider"></span>
+                    </label>
+                    <span>Mark as Completed</span>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="modal-cancel-btn" onclick="closeEditModal()">Cancel</button>
+                    <button type="submit" class="modal-save-btn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Load App JS -->
+    <script src="/static/app.js"></script>
+</body>
+</html>
